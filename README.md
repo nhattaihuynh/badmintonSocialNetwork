@@ -33,6 +33,7 @@
   Tech: Spring Cloud Config Server
 
   Purpose: Centralized configuration management (Git/Consul).
+  
 # Functional Services
 
 1. Authentication Service
@@ -67,7 +68,7 @@
 
 6. Friendship Service
 
-  Tech: Neo4j (graph DB for relationships) or PostgreSQL (with adjacency lists)
+  Tech: Neo4j (graph DB for relationships), Kotlin
 
   Purpose: Manage friend requests, followers, and relationship statuses.
 
@@ -85,13 +86,13 @@
 
 9. Search Service
 
-  Tech: Elasticsearch (full-text search), Redis (query caching)
+  Tech: Elasticsearch (full-text search), Redis (query caching), Quarkus
 
   Purpose: Search users, posts, and pages with filters.
 
 10. Media Upload Service
 
-  Tech: AWS S3/Google Cloud Storage, Spring WebFlux (async uploads), FFmpeg (video transcoding)
+  Tech: AWS S3/MinIO Storage, Spring WebFlux (async upload)
 
   Purpose: Upload images/videos, generate thumbnails, and optimize storage.
 
@@ -106,7 +107,9 @@
   Tech: Redis (caching feed data), Kafka (aggregate events), Cassandra (time-series data)
 
   Purpose: Generate personalized feeds using ranking algorithms (e.g., user interests).
+  
 # Additional Tech Stack
+
 ## Databases:
 
 Relational: PostgreSQL (ACID compliance for profiles/friendships).
@@ -117,9 +120,10 @@ Graph: Neo4j (friend recommendations).
 
 Cache: Redis (session storage, reaction counts).
 
+
 ## Inter-Service Communication:
 
-REST (sync): OpenFeign/RestTemplate.
+REST (sync): OpenFeign/RestTemplate/WebClient.
 
 Async: Apache Kafka/RabbitMQ (event-driven updates).
 
