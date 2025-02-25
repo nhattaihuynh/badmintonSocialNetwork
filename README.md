@@ -1,4 +1,4 @@
-# Core services
+# All services in project
 1. Authen-service
 2. Profile-service
 3. Post-service
@@ -86,13 +86,13 @@
 
 9. Search Service
 
-  Tech: Elasticsearch (full-text search), Redis (query caching), Quarkus
+  Tech: Elasticsearch (full-text search), Redis (query caching), Kotlin
 
   Purpose: Search users, posts, and pages with filters.
 
 10. Media Upload Service
 
-  Tech: AWS S3/MinIO Storage, Spring WebFlux (async upload)
+  Tech: AWS S3/MinIO Storage, Spring WebFlux (async upload), Kotlin
 
   Purpose: Upload images/videos, generate thumbnails, and optimize storage.
 
