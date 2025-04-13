@@ -102,7 +102,7 @@
 
   Purpose: Manage pages, admin roles, and page-related posts.
 
-12. NewsFeed Service
+12. Newsfeed Service
 
   Tech: Redis (caching feed data), Kafka (aggregate events), Cassandra (time-series data)
 
