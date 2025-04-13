@@ -13,7 +13,7 @@
 12. Discovery-service
 13. Fanpage-service
 14. Config-server
-15. Newsfeed-service
+15. NewsFeed-service
  
 # Core Infrastructure Services
 1. Discovery Service (Netflix Eureka)
