@@ -44,9 +44,9 @@
 
 2. Profile Service
 
-  Tech: Spring Data JPA, PostgreSQL, Hibernate
+  Tech: Spring Data JPA, PostgreSQL, Hibernate, Flyway (database migrations)
 
-  Purpose: Manage user profiles (CRUD), personal details, and privacy settings.
+  Purpose: Manage user profiles (CRUD), personal details
 
 3. Post Service
 

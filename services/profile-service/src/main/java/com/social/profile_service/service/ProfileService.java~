@@ -1,0 +1,96 @@
+package com.social.profile_service.service;
+
+import com.social.profile_service.entity.Profile;
+import com.social.profile_service.entity.Profile.SkillLevel;
+import com.social.profile_service.entity.Profile.PlayStyle;
+import com.social.profile_service.exception.ProfileAlreadyExistsException;
+import com.social.profile_service.exception.ProfileNotFoundException;
+import com.social.profile_service.mapper.ProfileMapper;
+import com.social.profile_service.repository.ProfileRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.UUID;
+
+@Service
+@RequiredArgsConstructor
+public class ProfileService {
+    private final ProfileRepository profileRepository;
+    private final ProfileMapper profileMapper;
+    
+    @Transactional(readOnly = true)
+    public List<Profile> getAllProfiles() {
+        return profileRepository.findAll();
+    }
+    
+    @Transactional(readOnly = true)
+    public Profile getProfileById(UUID id) {
+        return profileRepository.findById(id)
+                .orElseThrow(() -> new ProfileNotFoundException("Profile not found with id: " + id));
+    }
+    
+    @Transactional(readOnly = true)
+    public Profile getProfileByUsername(String username) {
+        return profileRepository.findByUsername(username)
+                .orElseThrow(() -> new ProfileNotFoundException("Profile not found with username: " + username));
+    }
+    
+    @Transactional
+    public Profile createProfile(Profile profile) {
+        if (profileRepository.existsByUsername(profile.getUsername())) {
+            throw new ProfileAlreadyExistsException("Username already taken: " + profile.getUsername());
+        }
+        return profileRepository.save(profile);
+    }
+    
+    @Transactional
+    public Profile updateProfile(UUID id, Profile profileDetails) {
+        Profile existingProfile = getProfileById(id);
+        
+        // Only update username if it's changed and not already taken by another user
+        if (!existingProfile.getUsername().equals(profileDetails.getUsername()) && 
+            profileRepository.existsByUsername(profileDetails.getUsername())) {
+            throw new ProfileAlreadyExistsException("Username already taken: " + profileDetails.getUsername());
+        }
+        
+        // Update fields using MapStruct
+        profileMapper.updateProfileFromRequest(profileDetails, existingProfile);
+        
+        return profileRepository.save(existingProfile);
+    }
+    
+    @Transactional
+    public void deleteProfile(UUID id) {
+        if (!profileRepository.existsById(id)) {
+            throw new ProfileNotFoundException("Profile not found with id: " + id);
+        }
+        profileRepository.deleteById(id);
+    }
+    
+    @Transactional(readOnly = true)
+    public List<Profile> findProfilesBySkillLevel(SkillLevel skillLevel) {
+        return profileRepository.findBySkillLevel(skillLevel);
+    }
+    
+    @Transactional(readOnly = true)
+    public List<Profile> findProfilesByPlayStyle(PlayStyle playStyle) {
+        return profileRepository.findByPreferredPlayStyle(playStyle);
+    }
+    
+    @Transactional(readOnly = true)
+    public List<Profile> findProfilesBySkillLevelAndPlayStyle(SkillLevel skillLevel, PlayStyle playStyle) {
+        return profileRepository.findBySkillLevelAndPreferredPlayStyle(skillLevel, playStyle);
+    }
+    
+    @Transactional(readOnly = true)
+    public List<Profile> findProfilesByLocation(String location) {
+        return profileRepository.findByPreferredLocationContaining(location);
+    }
+    
+    @Transactional(readOnly = true)
+    public List<Profile> searchProfiles(String keyword) {
+        return profileRepository.searchProfiles(keyword);
+    }
+}
