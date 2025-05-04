@@ -36,7 +36,17 @@ public class Profile {
     @Column(name = "cover_picture_url")
     private String coverPictureUrl;
 
-    private String location;
+    @Column(name = "skill_level")
+    private String skillLevel;
+
+    @Column(name = "preferred_play_style")
+    private String preferredPlayStyle;
+
+    @Column(name = "years_of_experience")
+    private Integer yearsOfExperience;
+
+    @Column(name = "preferred_location")
+    private String preferredLocation;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;

@@ -12,9 +12,6 @@ public record ProfileResponse(
     String profilePictureUrl,
     String coverPictureUrl,
     String preferredLocation,
-
-    // TODO
-    Integer totalFriend,
     String formattedCreatedAt,
     String formattedUpdatedAt
 ) {}

@@ -7,8 +7,5 @@ public record ProfileRequest(
     String bio,
     String profilePictureUrl,
     String coverPictureUrl,
-    String skillLevel,
-    String preferredPlayStyle,
-    Integer yearsOfExperience,
-    String preferredLocation
+    String location
 ) {}
