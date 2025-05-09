@@ -1,0 +1,63 @@
+package com.social.post_service.model
+
+import org.bson.types.ObjectId
+import org.springframework.data.annotation.Id
+import org.springframework.data.annotation.CreatedDate
+import org.springframework.data.annotation.LastModifiedDate
+import org.springframework.data.annotation.Version
+import org.springframework.data.mongodb.core.index.Indexed
+import org.springframework.data.mongodb.core.mapping.Document
+import org.springframework.data.mongodb.core.mapping.Field
+import java.time.LocalDateTime
+import java.util.UUID
+
+@Document("post")
+data class Post(
+    @Id
+    val id: ObjectId? = null,
+    
+    @Indexed
+    @Field("profile_id")
+    val profileId: UUID,
+    
+    val content: String,
+    
+    @Field("image_urls")
+    val imageUrls: List<String> = emptyList(),
+    
+    @CreatedDate
+    @Field("created_at")
+    val createdAt: LocalDateTime = LocalDateTime.now(),
+    
+    @LastModifiedDate
+    @Field("updated_at")
+    val updatedAt: LocalDateTime? = null,
+    
+    @Field("likes")
+    val likes: Int = 0,
+    
+    @Field("liked_by")
+    val likedBy: List<String> = emptyList(),
+    
+    @Field("comment_count")
+    val commentCount: Int = 0,
+    
+    @Field("share_count")
+    val shareCount: Int = 0,
+    
+    val location: String? = null,
+    
+    val feeling: String? = null,
+    
+    @Field("privacy_level")
+    val privacyLevel: PrivacyLevel = PrivacyLevel.PUBLIC,
+    
+    @Version
+    val version: Long = 0
+)
+
+enum class PrivacyLevel {
+    PUBLIC,
+    FRIENDS,
+    PRIVATE
+}

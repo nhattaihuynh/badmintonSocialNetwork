@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: post-service
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: post_service
+      auto-index-creation: false

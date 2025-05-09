@@ -1,148 +1,149 @@
-# All services in project
-1. Authen-service
-2. Profile-service
-3. Post-service
-4. Comment-service
-5. Reaction-service
-6. Friendship-service
-7. Chat-service
-8. Notification-service
-9. Search-service
-10. Media-upload-service
-11. Api-gateway
-12. Discovery-service
-13. Fanpage-service
-14. Config-server
-15. Newsfeed-service
- 
-# Core Infrastructure Services
-1. Discovery Service (Netflix Eureka)
+# all services in project
+1. main-contract-service
+2. authen-service
+3. profile-service
+4. post-service
+5. comment-service
+6. reaction-service
+7. friendship-service
+8. chat-service
+9. notification-service
+10. search-service
+11. media-upload-service
+12. api-gateway
+13. discovery-service
+14. fanpage-service
+15. config-server
+16. newsfeed-service
 
-  Tech: Spring Cloud Netflix Eureka
+# core infrastructure services
+1. discovery service (netflix eureka)
 
-  Purpose: Service registration and discovery for dynamic scaling.
+  tech: spring cloud netflix eureka
 
-2. API Gateway
+  purpose: service registration and discovery for dynamic scaling.
 
-  Tech: Spring Cloud Gateway
+2. api gateway
 
-  Purpose: Route requests, enforce security (JWT validation), rate limiting, and load balancing.
+  tech: spring cloud gateway
 
-3. Config Server
+  purpose: route requests, enforce security (jwt validation), rate limiting, and load balancing.
 
-  Tech: Spring Cloud Config Server
+3. config server
 
-  Purpose: Centralized configuration management (Git/Consul).
+  tech: spring cloud config server
+
+  purpose: centralized configuration management (git/consul).
   
-# Functional Services
+# functional services
 
-1. Authentication Service
+1. authentication service
 
-  Tech: Spring Security, JWT, OAuth2, Redis (token blacklist)
+  tech: spring security, jwt, oauth2, redis (token blacklist)
 
-  Purpose: User registration, login, token generation, and OAuth2 integration.
+  purpose: user registration, login, token generation, and oauth2 integration.
 
-2. Profile Service
+2. profile service
 
-  Tech: Spring Data JPA, PostgreSQL, Hibernate, Flyway (database migrations)
+  tech: spring data jpa, postgresql, hibernate, flyway (database migrations)
 
-  Purpose: Manage user profiles (CRUD), personal details
+  purpose: manage user profiles (crud), personal details
 
-3. Post Service
+3. post service
 
-  Tech: Spring Data JPA, MongoDB (for flexible post content), Kafka (event-driven updates)
+  tech: spring data jpa, mongodb (for flexible post content), kafka (event-driven updates)
 
-  Purpose: Create, edit, delete posts; handle privacy and tagging.
+  purpose: create, edit, delete posts; handle privacy and tagging.
 
-4. Comment Service
+4. comment service
 
-  Tech: Spring Data MongoDB, Couchbase (nested comments)
+  tech: spring data mongodb, couchbase (nested comments)
 
-  Purpose: Manage comments on posts, replies, and deletion.
+  purpose: manage comments on posts, replies, and deletion.
 
-5. Reaction Service
+5. reaction service
 
-  Tech: MongoDB (for high write throughput), Redis (caching frequent reactions)
+  tech: mongodb (for high write throughput), redis (caching frequent reactions)
 
-  Purpose: Track likes, emojis, and other reactions on posts/comments.
+  purpose: track likes, emojis, and other reactions on posts/comments.
 
-6. Friendship Service
+6. friendship service
 
-  Tech: Neo4j (graph DB for relationships), Kotlin
+  tech: neo4j (graph db for relationships), kotlin
 
-  Purpose: Manage friend requests, followers, and relationship statuses.
+  purpose: manage friend requests, followers, and relationship statuses.
 
-7. Chat Service
+7. chat service
 
-  Tech: WebSocket/STOMP (Spring WebSocket), Redis (pub/sub for messaging)
+  tech: websocket/stomp (spring websocket), redis (pub/sub for messaging)
 
-  Purpose: Real-time chat, message persistence, and typing indicators.
+  purpose: real-time chat, message persistence, and typing indicators.
 
-8. Notification Service
+8. notification service
 
-  Tech: Kafka (event streaming), Firebase Cloud Messaging (push notifications)
+  tech: kafka (event streaming), firebase cloud messaging (push notifications)
 
-  Purpose: Send real-time notifications (likes, comments, friend requests).
+  purpose: send real-time notifications (likes, comments, friend requests).
 
-9. Search Service
+9. search service
 
-  Tech: Elasticsearch (full-text search), Redis (query caching), Kotlin
+  tech: elasticsearch (full-text search), redis (query caching), kotlin
 
-  Purpose: Search users, posts, and pages with filters.
+  purpose: search users, posts, and pages with filters.
 
-10. Media Upload Service
+10. media upload service
 
-  Tech: AWS S3/MinIO Storage, Spring WebFlux (async upload), Kotlin
+  tech: aws s3/minio storage, spring webflux (async upload), kotlin
 
-  Purpose: Upload images/videos, generate thumbnails, and optimize storage.
+  purpose: upload images/videos, generate thumbnails, and optimize storage.
 
-11. Fanpage Service
+11. fanpage service
 
-  Tech: Spring Data JPA, PostgreSQL, Kafka (for page updates)
+  tech: spring data jpa, postgresql, kafka (for page updates)
 
-  Purpose: Manage pages, admin roles, and page-related posts.
+  purpose: manage pages, admin roles, and page-related posts.
 
-12. Newsfeed Service
+12. newsfeed service
 
-  Tech: Redis (caching feed data), Kafka (aggregate events), Cassandra (time-series data)
+  tech: redis (caching feed data), kafka (aggregate events), cassandra (time-series data)
 
-  Purpose: Generate personalized feeds using ranking algorithms (e.g., user interests).
+  purpose: generate personalized feeds using ranking algorithms (e.g., user interests).
   
-# Additional Tech Stack
+# additional tech stack
 
-## Databases:
+## databases:
 
-Relational: PostgreSQL (ACID compliance for profiles/friendships).
+relational: postgresql (acid compliance for profiles/friendships).
 
-NoSQL: MongoDB (flexible schemas for posts/comments), Cassandra (scalable feeds).
+nosql: mongodb (flexible schemas for posts/comments), cassandra (scalable feeds).
 
-Graph: Neo4j (friend recommendations).
+graph: neo4j (friend recommendations).
 
-Cache: Redis (session storage, reaction counts).
+cache: redis (session storage, reaction counts).
 
 
-## Inter-Service Communication:
+## inter-service communication:
 
-REST (sync): OpenFeign/RestTemplate/WebClient.
+rest (sync): openfeign/resttemplate/webclient.
 
-Async: Apache Kafka/RabbitMQ (event-driven updates).
+async: apache kafka/rabbitmq (event-driven updates).
 
-## Security:
+## security:
 
-Spring Security OAuth2, JWT, Vault (secrets management).
+spring security oauth2, jwt, vault (secrets management).
 
-## Deployment:
+## deployment:
 
-Docker, Kubernetes (orchestration), AWS EKS/Google GKE.
+docker, kubernetes (orchestration), aws eks/google gke.
 
-## Monitoring:
+## monitoring:
 
-Prometheus + Grafana (metrics), Sleuth/Zipkin (distributed tracing), ELK Stack (logging).
+prometheus + grafana (metrics), sleuth/zipkin (distributed tracing), elk stack (logging).
 
-## Testing:
+## testing:
 
-JUnit, Mockito, Testcontainers (integration tests).
+junit, mockito, testcontainers (integration tests).
 
-## API Docs:
+## api docs:
 
-Swagger/OpenAPI.
+swagger/openapi.
