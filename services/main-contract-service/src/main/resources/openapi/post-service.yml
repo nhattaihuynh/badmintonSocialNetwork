@@ -1,0 +1,163 @@
+openapi: 3.0.3
+info:
+  title: Post Service API
+  description: API for managing posts in the Badminton Social Network
+  version: 1.0.0
+servers:
+  - url: 'http://localhost:8080'
+    description: Local development server
+paths:
+  /api/posts:
+    post:
+      summary: Create a new post
+      operationId: createPost
+      tags:
+        - posts
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostRequest'
+      responses:
+        '201':
+          description: Post created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostResponse'
+        '400':
+          description: Invalid input
+    get:
+      summary: Get all posts by profile ID
+      operationId: getPostsByProfileId
+      tags:
+        - posts
+      parameters:
+        - name: profileId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: ID of the profile to get posts for
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PostResponse'
+  /api/posts/{id}:
+    get:
+      summary: Get a post by ID
+      operationId: getPostById
+      tags:
+        - posts
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the post to retrieve
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostResponse'
+        '404':
+          description: Post not found
+components:
+  schemas:
+    PrivacyLevel:
+      type: string
+      enum:
+        - PUBLIC
+        - FRIENDS
+        - PRIVATE
+    PostRequest:
+      type: object
+      required:
+        - profileId
+        - content
+      properties:
+        profileId:
+          type: string
+          format: uuid
+          description: ID of the profile creating the post
+        content:
+          type: string
+          description: Content of the post
+        imageUrls:
+          type: array
+          items:
+            type: string
+          description: URLs of images attached to the post
+        location:
+          type: string
+          nullable: true
+          description: Location associated with the post
+        feeling:
+          type: string
+          nullable: true
+          description: Feeling associated with the post
+        privacyLevel:
+          $ref: '#/components/schemas/PrivacyLevel'
+          description: Privacy level of the post
+    PostResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the post
+        profileId:
+          type: string
+          format: uuid
+          description: ID of the profile that created the post
+        content:
+          type: string
+          description: Content of the post
+        imageUrls:
+          type: array
+          items:
+            type: string
+          description: URLs of images attached to the post
+        createdAt:
+          type: string
+          format: date-time
+          description: Date and time when the post was created
+        updatedAt:
+          type: string
+          format: date-time
+          nullable: true
+          description: Date and time when the post was last updated
+        likes:
+          type: integer
+          description: Number of likes on the post
+        likedBy:
+          type: array
+          items:
+            type: string
+          description: IDs of profiles that liked the post
+        commentCount:
+          type: integer
+          description: Number of comments on the post
+        shareCount:
+          type: integer
+          description: Number of times the post has been shared
+        location:
+          type: string
+          nullable: true
+          description: Location associated with the post
+        feeling:
+          type: string
+          nullable: true
+          description: Feeling associated with the post
+        privacyLevel:
+          $ref: '#/components/schemas/PrivacyLevel'
+          description: Privacy level of the post

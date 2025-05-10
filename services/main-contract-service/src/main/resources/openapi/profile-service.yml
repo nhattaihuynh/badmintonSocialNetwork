@@ -1,0 +1,119 @@
+openapi: 3.0.3
+info:
+  title: Profile Service API
+  description: API for managing user profiles in the Badminton Social Network
+  version: 1.0.0
+servers:
+  - url: 'http://localhost:8080'
+    description: Local development server
+paths:
+  /api/profile:
+    post:
+      summary: Create a new profile
+      operationId: createProfile
+      tags:
+        - profile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProfileRequest'
+      responses:
+        '201':
+          description: Profile created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileResponse'
+        '400':
+          description: Invalid input
+  /api/profile/{id}:
+    get:
+      summary: Get a profile by ID
+      operationId: getProfileById
+      tags:
+        - profile
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: ID of the profile to retrieve
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileResponse'
+        '404':
+          description: Profile not found
+components:
+  schemas:
+    ProfileRequest:
+      type: object
+      required:
+        - username
+        - fullName
+      properties:
+        username:
+          type: string
+          description: Username for the profile
+        fullName:
+          type: string
+          description: Full name of the user
+        phoneNumber:
+          type: string
+          description: Phone number of the user
+        bio:
+          type: string
+          description: Biography or description of the user
+        profilePictureUrl:
+          type: string
+          description: URL to the profile picture
+        coverPictureUrl:
+          type: string
+          description: URL to the cover picture
+        location:
+          type: string
+          description: Location of the user
+    ProfileResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier of the profile
+        username:
+          type: string
+          description: Username for the profile
+        fullName:
+          type: string
+          description: Full name of the user
+        phoneNumber:
+          type: string
+          description: Phone number of the user
+        bio:
+          type: string
+          description: Biography or description of the user
+        profilePictureUrl:
+          type: string
+          description: URL to the profile picture
+        coverPictureUrl:
+          type: string
+          description: URL to the cover picture
+        preferredLocation:
+          type: string
+          description: Preferred location of the user
+        totalFriend:
+          type: integer
+          description: Total number of friends
+        formattedCreatedAt:
+          type: string
+          description: Formatted creation date and time
+        formattedUpdatedAt:
+          type: string
+          description: Formatted last update date and time

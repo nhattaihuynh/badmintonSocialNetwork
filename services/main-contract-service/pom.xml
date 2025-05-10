@@ -105,6 +105,23 @@
 							</configOptions>
 						</configuration>
 					</execution>
+					<!-- Generate code for Profile Service API -->
+					<execution>
+						<id>generate-profile-api</id>
+						<phase>generate-sources</phase>
+						<goals><goal>generate</goal></goals>
+						<configuration>
+							<inputSpec>${project.basedir}/src/main/resources/openapi/profile-service.yml</inputSpec>
+							<generatorName>spring</generatorName>
+							<apiPackage>com.social.codegen.profile.api</apiPackage>
+							<modelPackage>com.social.codegen.profile.model</modelPackage>
+							<configOptions>
+								<interfaceOnly>true</interfaceOnly>
+								<useSpringController>true</useSpringController>
+								<useJakartaEe>true</useJakartaEe>
+							</configOptions>
+						</configuration>
+					</execution>
 				</executions>
 			</plugin>
 		</plugins>

@@ -17,19 +17,21 @@
 16. newsfeed-service
 
 # core infrastructure services
-1. discovery service (netflix eureka)
+
+1. main-contract-service
+2. discovery service (netflix eureka)
 
   tech: spring cloud netflix eureka
 
   purpose: service registration and discovery for dynamic scaling.
 
-2. api gateway
+3. api gateway
 
   tech: spring cloud gateway
 
   purpose: route requests, enforce security (jwt validation), rate limiting, and load balancing.
 
-3. config server
+4. config server
 
   tech: spring cloud config server
 
@@ -117,7 +119,7 @@ relational: postgresql (acid compliance for profiles/friendships).
 
 nosql: mongodb (flexible schemas for posts/comments), cassandra (scalable feeds).
 
-graph: neo4j (friend recommendations).
+graph: neo4j (friendships).
 
 cache: redis (session storage, reaction counts).
 
