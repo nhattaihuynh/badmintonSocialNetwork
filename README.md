@@ -128,7 +128,7 @@ cache: redis (session storage, reaction counts).
 
 rest (sync): openfeign/resttemplate/webclient.
 
-async: apache kafka/rabbitmq (event-driven updates).
+async: apache kafka (event-driven updates).
 
 ## security:
 
@@ -136,16 +136,8 @@ spring security oauth2, jwt, vault (secrets management).
 
 ## deployment:
 
-docker, kubernetes (orchestration), aws eks/google gke.
-
-## monitoring:
-
-prometheus + grafana (metrics), sleuth/zipkin (distributed tracing), elk stack (logging).
-
-## testing:
-
-junit, mockito, testcontainers (integration tests).
+docker, kubernetes (orchestration).
 
 ## api docs:
 
-swagger/openapi.
+openapi.
