@@ -28,8 +28,6 @@ public class Comment {
 
     private String content;
 
-    private String fullName;
-
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
