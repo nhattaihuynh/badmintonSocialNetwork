@@ -8,18 +8,24 @@ import java.util.UUID
 data class Profile(
     @Id @GeneratedValue
     val id: UUID = UUID.randomUUID(),
-    
+
     @Property("profileId")
     val profileId: String,
-    
+
     @Property("username")
     val username: String,
-    
+
     @Property("fullName")
     val fullName: String,
-    
-    @Relationship(type = "FRIEND", direction = Relationship.Direction.OUTGOING)
+
+    @Relationship(type = "IS_FRIEND_WITH", direction = Relationship.Direction.OUTGOING)
     val friends: MutableSet<Profile> = mutableSetOf(),
+
+    @Relationship(type = "SENT_FRIEND_REQUEST", direction = Relationship.Direction.OUTGOING)
+    val sentFriendRequest: MutableSet<Profile> = mutableSetOf(),
+
+    @Relationship(type = "RECEIVED_FRIEND_REQUEST", direction = Relationship.Direction.INCOMING)
+    val receivedFriendRequest: MutableSet<Profile> = mutableSetOf(),
 
     @Property("createdAt")
     val createdAt: LocalDateTime = LocalDateTime.now(),

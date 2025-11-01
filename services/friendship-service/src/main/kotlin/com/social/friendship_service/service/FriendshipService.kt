@@ -11,8 +11,8 @@ import java.util.Optional
 
 @Service
 class FriendshipService(
-    private val profileRepository: ProfileRepository,
-    private val neo4jTemplate: Neo4jTemplate
+    val profileRepository: ProfileRepository,
+    val neo4jTemplate: Neo4jTemplate
 ) {
 
     private val logger = LoggerFactory.getLogger(FriendshipService::class.java)

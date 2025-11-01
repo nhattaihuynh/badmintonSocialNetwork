@@ -7,7 +7,24 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/friendship")
 class FriendshipController(
-    private val friendshipService: FriendshipService
+    val friendshipService: FriendshipService
 ) {
+    // create a friend request
+
+
+    // accept a friend request
+
+
+    // list incoming pending friend requests
+
+
+
+    // get all friends for a profile
+
+
+    // get mutual friend between two profiles
+
+
+    // unfriend a user
     
 }
