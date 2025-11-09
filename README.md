@@ -59,9 +59,9 @@
 
 4. comment service
 
-  tech: spring data mongodb, couchbase (nested comments)
+  tech: spring data jpa + postgresql
 
-  purpose: manage comments on posts, replies, and deletion.
+  purpose: manage comments on posts and replies.
 
 5. reaction service
 
