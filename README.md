@@ -1,143 +1,139 @@
-# all services in project
-1. main-contract-service
-2. authen-service
-3. profile-service
-4. post-service
-5. comment-service
-6. reaction-service
-7. friendship-service
-8. chat-service
-9. notification-service
-10. search-service
-11. media-upload-service
-12. api-gateway
-13. discovery-service
-14. fanpage-service
-15. config-server
-16. newsfeed-service
+# Badminton Social Network - Microservices Architecture
 
-# core infrastructure services
+## Project Overview
 
-1. main-contract-service
-2. discovery service (netflix eureka)
+A distributed microservices-based social network platform for badminton enthusiasts, built with Spring Boot, Spring Cloud, and various databases.
 
-  tech: spring cloud netflix eureka
+## Services Status
 
-  purpose: service registration and discovery for dynamic scaling.
+### ✅ Implemented Services
 
-3. api gateway
+1. **Profile Service**
+   - Tech: Spring Boot 3.4.4, Spring Data JPA, PostgreSQL, Flyway, Java 21
+   - Purpose: Manage user profiles (CRUD), personal details
+   - Endpoints:
+     - `GET /api/profile/{id}` - Get profile by ID
+     - `POST /api/profile` - Create new profile
 
-  tech: spring cloud gateway
+2. **Post Service**
+   - Tech: Spring Data JPA, MongoDB, Kafka, Kotlin, Spring Boot 3.5.0
+   - Purpose: Create, read, delete posts; handle privacy and tagging
+   - Endpoints:
+     - `POST /api/posts` - Create a new post
+     - `GET /api/posts/{id}` - Get post by ID
+     - `GET /api/posts/profile/{profileId}` - Get posts by profile ID
 
-  purpose: route requests, enforce security (jwt validation), rate limiting, and load balancing.
+3. **Comment Service**
+   - Tech: Spring Data JPA, PostgreSQL, Java
+   - Purpose: Manage comments on posts and replies
+   - Endpoints:
+     - `POST /comments` - Create a new comment
+     - `GET /comments/{postId}/comments-with-replies` - Get comments with replies for a post
 
-4. config server
+4. **Friendship Service**
+   - Tech: Neo4j, Kotlin, Spring Boot 3.5.0, Kafka integration
+   - Purpose: Manage friend requests, followers, and relationship statuses using graph database
+   - Key Features:
+     - Graph-based relationship tracking
+     - Friend request management
+     - Mutual friend detection
+   - Endpoints:
+     - `POST /friendship/request/send` - Send friend request (params: sourceProfileId, targetProfileId)
+     - `POST /friendship/request/accept` - Accept friend request (params: profileId, friendProfileId)
+     - `GET /friendship/request/incoming` - Get incoming friend requests (params: profileId)
+     - `GET /friendship/friends` - Get all friends (params: profileId)
+     - `GET /friendship/mutual` - Get mutual friends (params: profileId1, profileId2)
 
-  tech: spring cloud config server
+5. **Kafka Common Service**
+   - Tech: Spring Kafka, Spring Boot 3.5.3, Java 21
+   - Purpose: Shared Kafka configurations and common messaging utilities
 
-  purpose: centralized configuration management (git/consul).
-  
-# functional services
+### 🔧 Core Infrastructure Services
 
-1. authentication service
+1. **API Gateway**
+   - Tech: Spring Cloud Gateway
+   - Purpose: Route requests, enforce security (JWT validation), rate limiting, and load balancing
 
-  tech: spring security, jwt, oauth2, redis (token blacklist)
+2. **Discovery Service**
+   - Tech: Spring Cloud Netflix Eureka
+   - Purpose: Service registration and discovery for dynamic scaling
 
-  purpose: user registration, login, token generation, and oauth2 integration.
+3. **Config Server**
+   - Tech: Spring Cloud Config Server
+   - Purpose: Centralized configuration management
 
-2. profile service
+4. **Main Contract Service**
+   - Tech: Spring Boot, Java 21
+   - Purpose: Shared data models and DTOs across services
 
-  tech: spring data jpa, postgresql, hibernate, flyway (database migrations)
+### 🚀 In Development
 
-  purpose: manage user profiles (crud), personal details
+5. **Media Upload Service**
+   - Tech: AWS S3/Minio, Spring WebFlux, Kotlin
+   - Purpose: Async image/video upload, thumbnail generation, storage optimization
+   - Status: Controller structure in place, implementation in progress
 
-3. post service
+### 📋 Planned Services (Not Started)
 
-  tech: spring data jpa, mongodb (for flexible post content), kafka (event-driven updates)
+- **Authentication Service** - JWT, OAuth2, Spring Security, Redis token blacklist
+- **Reaction Service** - MongoDB, Redis caching for likes/emojis
+- **Chat Service** - WebSocket/STOMP, Redis pub/sub
+- **Notification Service** - Kafka events, Firebase Cloud Messaging
+- **Search Service** - Elasticsearch, Redis caching
+- **Fanpage Service** - Pages management with admin roles
+- **Newsfeed Service** - Personalized feeds with Redis caching and Cassandra
 
-  purpose: create, edit, delete posts; handle privacy and tagging.
+## Technology Stack
 
-4. comment service
+### Languages & Frameworks
+- **Java 21** - Primary language
+- **Kotlin** - Used in: Friendship Service, Post Service, Media Upload Service, Search Service
+- **Spring Boot** - Framework (versions 3.4.4 - 3.5.3)
+- **Spring Cloud** - Microservices infrastructure (Eureka, Gateway, Config)
 
-  tech: spring data jpa + postgresql
+### Databases
+- **PostgreSQL** - Profile Service, Comment Service (ACID compliance)
+- **Neo4j** - Friendship Service (graph relationships)
+- **MongoDB** - Post Service (flexible schemas)
+- **Redis** - Caching, session storage (planned for reactions, chat)
+- **Cassandra** - Newsfeed Service (time-series, planned)
 
-  purpose: manage comments on posts and replies.
+### Message Queue & Event Streaming
+- **Apache Kafka** - Inter-service async communication
 
-5. reaction service
+### Build & Deployment
+- **Maven** - Build tool
+- **Docker** - Containerization (planned)
+- **Kubernetes** - Orchestration (planned)
 
-  tech: mongodb (for high write throughput), redis (caching frequent reactions)
+## Project Structure
 
-  purpose: track likes, emojis, and other reactions on posts/comments.
+```
+badmintonSocialNetwork/
+├── services/
+│   ├── api-gateway/                 (Spring Cloud Gateway)
+│   ├── comment-service/             (PostgreSQL, Java)
+│   ├── config-server/               (Spring Cloud Config)
+│   ├── discovery-service/           (Netflix Eureka)
+│   ├── friendship-service/          (Neo4j, Kotlin)
+│   ├── kafka-common-service/        (Kafka Commons)
+│   ├── main-contract-service/       (Shared DTOs)
+│   ├── media-upload-service/        (In Progress - Kotlin)
+│   ├── post-service/                (MongoDB, Kotlin)
+│   └── profile-service/             (PostgreSQL, Java)
+├── scripts/
+└── README.md
+```
 
-6. friendship service
+## Next Steps
 
-  tech: neo4j (graph db for relationships), kotlin
+1. Complete Media Upload Service APIs
+2. Implement Authentication Service with JWT/OAuth2
+3. Add Reaction Service for likes and emojis
+4. Implement Real-time Chat Service
+5. Build Notification System with Kafka + Firebase
+6. Create Search Service with Elasticsearch
+7. Develop Personalized Newsfeed Service
+8. Add API Documentation (OpenAPI/Swagger)
+9. Implement Docker & Kubernetes deployment configs
 
-  purpose: manage friend requests, followers, and relationship statuses.
-
-7. chat service
-
-  tech: websocket/stomp (spring websocket), redis (pub/sub for messaging)
-
-  purpose: real-time chat, message persistence, and typing indicators.
-
-8. notification service
-
-  tech: kafka (event streaming), firebase cloud messaging (push notifications)
-
-  purpose: send real-time notifications (likes, comments, friend requests).
-
-9. search service
-
-  tech: elasticsearch (full-text search), redis (query caching), kotlin
-
-  purpose: search users, posts, and pages with filters.
-
-10. media upload service
-
-  tech: aws s3/minio storage, spring webflux (async upload), kotlin
-
-  purpose: upload images/videos, generate thumbnails, and optimize storage.
-
-11. fanpage service
-
-  tech: spring data jpa, postgresql, kafka (for page updates)
-
-  purpose: manage pages, admin roles, and page-related posts.
-
-12. newsfeed service
-
-  tech: redis (caching feed data), kafka (aggregate events), cassandra (time-series data)
-
-  purpose: generate personalized feeds using ranking algorithms (e.g., user interests).
-  
-# additional tech stack
-
-## databases:
-
-relational: postgresql (acid compliance for profiles/friendships).
-
-nosql: mongodb (flexible schemas for posts/comments), cassandra (scalable feeds).
-
-graph: neo4j (friendships).
-
-cache: redis (session storage, reaction counts).
-
-
-## inter-service communication:
-
-rest (sync): openfeign/resttemplate/webclient.
-
-async: apache kafka (event-driven updates).
-
-## security:
-
-spring security oauth2, jwt, vault (secrets management).
-
-## deployment:
-
-docker, kubernetes (orchestration).
-
-## api docs:
-
-openapi.
