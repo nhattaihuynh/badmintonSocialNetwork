@@ -11,17 +11,10 @@ A distributed microservices-based social network platform for badminton enthusia
 1. **Profile Service**
    - Tech: Spring Boot 3.4.4, Spring Data JPA, PostgreSQL, Flyway, Java 21
    - Purpose: Manage user profiles (CRUD), personal details
-   - Endpoints:
-     - `GET /api/profile/{id}` - Get profile by ID
-     - `POST /api/profile` - Create new profile
 
 2. **Post Service**
    - Tech: Spring Data JPA, MongoDB, Kafka, Kotlin, Spring Boot 3.5.0
    - Purpose: Create, read, delete posts; handle privacy and tagging
-   - Endpoints:
-     - `POST /api/posts` - Create a new post
-     - `GET /api/posts/{id}` - Get post by ID
-     - `GET /api/posts/profile/{profileId}` - Get posts by profile ID
 
 3. **Comment Service**
    - Tech: Spring Data JPA, PostgreSQL, Java
@@ -37,12 +30,6 @@ A distributed microservices-based social network platform for badminton enthusia
      - Graph-based relationship tracking
      - Friend request management
      - Mutual friend detection
-   - Endpoints:
-     - `POST /friendship/request/send` - Send friend request (params: sourceProfileId, targetProfileId)
-     - `POST /friendship/request/accept` - Accept friend request (params: profileId, friendProfileId)
-     - `GET /friendship/request/incoming` - Get incoming friend requests (params: profileId)
-     - `GET /friendship/friends` - Get all friends (params: profileId)
-     - `GET /friendship/mutual` - Get mutual friends (params: profileId1, profileId2)
 
 5. **Kafka Common Service**
    - Tech: Spring Kafka, Spring Boot 3.5.3, Java 21
@@ -62,16 +49,12 @@ A distributed microservices-based social network platform for badminton enthusia
    - Tech: Spring Cloud Config Server
    - Purpose: Centralized configuration management
 
-4. **Main Contract Service**
-   - Tech: Spring Boot, Java 21
-   - Purpose: Shared data models and DTOs across services
-
-### 🚀 In Development
+### ✅ Implemented Services (Continued)
 
 5. **Media Upload Service**
-   - Tech: AWS S3/Minio, Spring WebFlux, Kotlin
-   - Purpose: Async image/video upload, thumbnail generation, storage optimization
-   - Status: Controller structure in place, implementation in progress
+   - Tech: Spring Data MongoDB, Spring Boot 3.5.7, Kotlin, Java 21
+   - Purpose: File upload management, media metadata storage, access control
+   - Database: MongoDB (files collection)
 
 ### 📋 Planned Services (Not Started)
 
@@ -94,7 +77,7 @@ A distributed microservices-based social network platform for badminton enthusia
 ### Databases
 - **PostgreSQL** - Profile Service, Comment Service (ACID compliance)
 - **Neo4j** - Friendship Service (graph relationships)
-- **MongoDB** - Post Service (flexible schemas)
+- **MongoDB** - Post Service (flexible schemas), Media Upload Service (file metadata)
 - **Redis** - Caching, session storage (planned for reactions, chat)
 - **Cassandra** - Newsfeed Service (time-series, planned)
 
@@ -117,23 +100,19 @@ badmintonSocialNetwork/
 │   ├── discovery-service/           (Netflix Eureka)
 │   ├── friendship-service/          (Neo4j, Kotlin)
 │   ├── kafka-common-service/        (Kafka Commons)
-│   ├── main-contract-service/       (Shared DTOs)
-│   ├── media-upload-service/        (In Progress - Kotlin)
+│   ├── notification-service/        (Planned)
+│   ├── post-service/                (MongoDB, Kotlin)
+│   ├── profile-service/             (PostgreSQL, Java)
+│   ├── reaction-service/            (Planned)
+│   ├── search-service/              (Planned)
+│   ├── newsfeed-service/            (Planned)
+│   ├── fanpage-service/             (Planned)
+│   ├── chat-service/                (Planned)
+│   └── authentication-service/      (Planned)
+│   ├── media-upload-service/        (MongoDB, Kotlin - Document Model Complete)
 │   ├── post-service/                (MongoDB, Kotlin)
 │   └── profile-service/             (PostgreSQL, Java)
 ├── scripts/
 └── README.md
 ```
-
-## Next Steps
-
-1. Complete Media Upload Service APIs
-2. Implement Authentication Service with JWT/OAuth2
-3. Add Reaction Service for likes and emojis
-4. Implement Real-time Chat Service
-5. Build Notification System with Kafka + Firebase
-6. Create Search Service with Elasticsearch
-7. Develop Personalized Newsfeed Service
-8. Add API Documentation (OpenAPI/Swagger)
-9. Implement Docker & Kubernetes deployment configs
 
