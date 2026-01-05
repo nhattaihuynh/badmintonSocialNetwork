@@ -1,0 +1,60 @@
+server:
+    port: 8081
+
+spring:
+    application:
+        name: identity-service
+    cloud:
+        config:
+            enabled: false
+    datasource:
+        url: jdbc:postgresql://code4fun.id.vn:5432/badminton_profile_service?currentSchema=identity_service
+        username: ${DB_USERNAME:dev}
+        password: ${DB_PASSWORD:P@ssword*123}
+        driver-class-name: org.postgresql.Driver
+    jpa:
+        hibernate:
+            ddl-auto: validate
+        show-sql: true
+        properties:
+            hibernate:
+                format_sql: true
+                dialect: org.hibernate.dialect.PostgreSQLDialect
+
+flywaypf:
+    active: identity_service
+
+eureka:
+    client:
+        service-url:
+            defaultZone: ${EUREKA_URI:http://localhost:8761/eureka/}
+    instance:
+        prefer-ip-address: true
+
+app:
+    security:
+        jwt:
+            issuer-uri: ${JWT_ISSUER_URI:http://localhost:8081}
+            # RSA Keys - For production, set these environment variables:
+            # RSA_PUBLIC_KEY: Base64 encoded public key (X.509 format)
+            # RSA_PRIVATE_KEY: Base64 encoded private key (PKCS#8 format)
+            # RSA_KEY_ID: Unique key identifier
+            # If not set, keys are generated at startup (dev mode only - NOT for production!)
+            public-key: ${RSA_PUBLIC_KEY:}
+            private-key: ${RSA_PRIVATE_KEY:}
+            key-id: ${RSA_KEY_ID:}
+        
+        token:
+            access-token-validity-seconds: ${ACCESS_TOKEN_VALIDITY:3600}
+            refresh-token-validity-seconds: ${REFRESH_TOKEN_VALIDITY:604800}
+        
+        cors:
+            allowed-origins:
+                - ${CORS_ORIGIN_1:http://localhost:3000}
+                - ${CORS_ORIGIN_2:http://localhost:4200}
+                - ${CORS_ORIGIN_3:http://localhost:5173}
+
+logging:
+    level:
+        com.social.identity_service: DEBUG
+        org.springframework.security: DEBUG

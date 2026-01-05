@@ -1,0 +1,5 @@
+CREATE SCHEMA IF NOT EXISTS identity_service;
+DROP
+EXTENSION IF EXISTS "uuid-ossp";
+CREATE
+EXTENSION IF NOT EXISTS "uuid-ossp";
