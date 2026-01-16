@@ -7,3 +7,6 @@ spring:
       port: 27017
       database: post_service
       auto-index-creation: false
+
+server:
+  port: 8082

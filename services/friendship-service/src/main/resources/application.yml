@@ -1,3 +1,6 @@
 spring:
   application:
     name: friendship-service
+
+server:
+  port: 8084

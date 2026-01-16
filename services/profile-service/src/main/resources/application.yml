@@ -36,3 +36,8 @@ management:
         include: health,info
   health:
     show-details: always
+
+idp:
+  url: http://localhost:8180
+  client-id: badminton-fe
+  client-secret: RTecGqWosyfNBawH1Ii89elWXvfqebmm

@@ -53,6 +53,12 @@ public class ProfileService {
 
     @Transactional
     public ProfileResponse createProfileFromRequest(ProfileRequest profileRequest) {
+
+        // get exchange client token
+
+        // call to create a user in Keycloak
+
+        // create a profile in our system
         Profile profile = profileMapper.toEntity(profileRequest);
         Profile createdProfile = createProfile(profile);
         return profileMapper.toResponse(createdProfile);

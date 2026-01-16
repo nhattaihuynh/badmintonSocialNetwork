@@ -23,6 +23,12 @@ public class Profile {
     @Column(unique = true, nullable = false)
     private String username;
 
+    private String email;
+
+    private String firstName;
+
+    private String lastname;
+
     @Column(nullable = false)
     private String fullName;
 

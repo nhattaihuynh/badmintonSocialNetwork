@@ -3,10 +3,25 @@ spring:
     name: api-gateway
   cloud:
     gateway:
-      discovery:
-        locator:
-          enabled: true
-          lower-case-service-id: true
+      routes:
+        - id: post-route
+          uri: lb://post-service  # 'lb' = Load Balanced via Eureka
+          predicates:
+            - Path=/post/** # Match request path
+          filters:
+            - StripPrefix=1          # Optional: Remove /posts before forwarding if needed
+
+        - id: reaction-route
+          uri: lb://reaction-service
+          predicates:
+            - Path=/reactions/**
+
+        - id: profile-route
+          uri: lb://profile-service
+          predicates:
+            - Path=/profile/**
+          filters:
+            - StripPrefix=1
 
 server:
   port: 8080
